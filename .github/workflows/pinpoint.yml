@@ -1,0 +1,20 @@
+# Audit the coding agent's log before its pull request merges.
+name: Pinpoint
+
+on:
+  pull_request:
+    paths:
+      - "agent-logs/**"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Audit the agent's log
+        uses: ManasMehta1110/pinpoint@main
+        with:
+          log: agent-logs/run.json
+        env:
+          BASETEN_API_KEY: ${{ secrets.BASETEN_API_KEY }}
